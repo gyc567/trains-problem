@@ -6,6 +6,6 @@ package ericguo.solution.algorigthm;
  */
 public interface Algorithm {
 
-    //get the shortest path for vertex a to vertex b
+    //get the shortest path from vertex a to vertex b
     String calculate(String startVertex,String endVertex);
 }

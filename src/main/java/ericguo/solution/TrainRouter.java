@@ -61,8 +61,9 @@ public class TrainRouter {
     }
 
     private String loadAlgorithmAndGetShortestPath(String startVertex, String endVertex ) {
-
+        //load the algorithm
         Context context =new Context(new DijkstraAlgorithm(graph));
+        //calculate with algorithm and return the shortest path
         return context.calculate(startVertex,endVertex);
     }
 

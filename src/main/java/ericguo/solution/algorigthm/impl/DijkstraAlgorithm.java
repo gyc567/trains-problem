@@ -46,11 +46,15 @@ public class DijkstraAlgorithm implements Algorithm {
     private void findMinimalDistances(Vertex node, boolean isSameNode, Vertex source) {
         List<Vertex> adjacentNodes = getNeighbors(node, isSameNode);
         for (Vertex target : adjacentNodes) {
+            //the distance of node to target.
+            int distance = getDistance(node, target);
+            //the shortest distance from source to target
+            int distanceFromSourceToTarget = getShortestDistance(node)
+                    + distance;
             // find the adjacent node of current node  is source node
             if (isSameNode && target.getName().equals(source.getName())) {
 
-                distance.put(target, getShortestDistance(node)
-                        + getDistance(node, target));
+                this.distance.put(target, distanceFromSourceToTarget);
                 predecessors.put(target, node);
                 //when the target is source,clear unsettled nodes and return
                 unSettledNodes.clear();
@@ -58,10 +62,10 @@ public class DijkstraAlgorithm implements Algorithm {
             }
             //the adjacentNodes of node didn't contain the source node
             if (!adjacentNodes.contains(source)) {
-                if (getShortestDistance(target) > getShortestDistance(node)
-                        + getDistance(node, target)) {
-                    distance.put(target, getShortestDistance(node)
-                            + getDistance(node, target));
+
+                //the distance of source to target is smaller than the shortest distance in cache
+                if (getShortestDistance(target) > distanceFromSourceToTarget) {
+                    this.distance.put(target, distanceFromSourceToTarget);
                     predecessors.put(target, node);
                     unSettledNodes.add(target);
                 }

@@ -73,6 +73,23 @@ public class GraphAnalyzer implements Analyzer {
 
 
 
+    //depth-first search
+    private void dfs(Vertex normalVertexIndex, int depth, Vertex search, int limit) {
+        if (depth == limit) {
+            return;
+        }
+        LinkedList<List< Edge>> queue = new LinkedList<List< Edge>>();
+        queue.add(graph.getNeighbors().get(normalVertexIndex.getName()));
+        while (!queue.isEmpty()) {
+            for ( Edge normalEdge : queue.poll()) {
+                if (containsVertex(normalEdge, search)) {
+                    this.count++;
+                }
+                dfs(normalEdge.getDestination(), depth + 1, search, limit);
+            }
+        }
+    }
+
     private void dfsExact(Vertex normalVertexIndex, int depth, Vertex search, int length) {
         if (depth == length) {
             return;
@@ -110,23 +127,6 @@ public class GraphAnalyzer implements Analyzer {
         Vertex startV = new NormalVertex("vertex"+startVertex,startVertex);
 
         return startV;
-    }
-
-    //depth-first search
-    private void dfs(Vertex normalVertexIndex, int depth, Vertex search, int limit) {
-        if (depth == limit) {
-            return;
-        }
-        LinkedList<List< Edge>> queue = new LinkedList<List< Edge>>();
-        queue.add(graph.getNeighbors().get(normalVertexIndex.getName()));
-        while (!queue.isEmpty()) {
-            for ( Edge normalEdge : queue.poll()) {
-                if (containsVertex(normalEdge, search)) {
-                    this.count++;
-                }
-                dfs(normalEdge.getDestination(), depth + 1, search, limit);
-            }
-        }
     }
 
     //determine the  Edge include the vertex
